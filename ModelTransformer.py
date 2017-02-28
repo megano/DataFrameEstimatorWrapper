@@ -47,7 +47,7 @@ class kfold_classification_model(TransformerMixin):
             kscores.append(mod.score(X_test, y_test))
             models.append(mod)
         self.kscores = kscores
-        self.model = models[np.array(kscores).argmax()]
+        self.model.fit(X_1, y_1);
         return self
 
     def transform(self, X, *_) :
