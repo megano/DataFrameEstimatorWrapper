@@ -79,3 +79,15 @@ class kfold_classification_model(TransformerMixin):
         plt.show()
 
         return acc
+
+class PredictTransformer(TransformerMixin):
+    def __init__(self, model) :
+        self.model = model
+
+    def transform(self, X, *_):
+        ret = self.model.predict(X)
+        ret = pd.DataFrame(ret)
+        return ret
+
+    def fit(self, X, y =None):
+        return self
