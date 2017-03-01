@@ -1,5 +1,5 @@
 from sklearn.base import TransformerMixin
-from sklearn.model_selection import KFold
+from sklearn.model_selection import StratifiedKFold
 from sklearn.base import clone
 from sklearn.metrics import confusion_matrix, recall_score, precision_score, roc_curve
 import matplotlib.pyplot as plt
@@ -35,11 +35,11 @@ class kfold_classification_model(TransformerMixin):
         self.X = X
         self.y = y
 
-        kf = KFold(n_splits=self.nfolds, shuffle=True)
+        kf = StratifiedKFold(n_splits=self.nfolds, shuffle=True)
 
         kscores = []
         models = []
-        for train_index, test_index in kf.split(self.X):
+        for train_index, test_index in kf.split(self.X, self.y):
             X_train, X_test = X[train_index], X[test_index]
             y_train, y_test = y[train_index], y[test_index]
             mod = clone(self.model)
