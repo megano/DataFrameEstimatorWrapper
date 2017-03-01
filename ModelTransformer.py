@@ -39,7 +39,8 @@ class kfold_classification_model(TransformerMixin):
 
         kscores = []
         models = []
-        for train_index, test_index in kf.split(X):
+        for train_index, test_index in kf.split(self.X):
+            print train_index, "\n", test_index
             X_train, X_test = X[train_index], X[test_index]
             y_train, y_test = y[train_index], y[test_index]
             mod = clone(self.model)
@@ -47,7 +48,7 @@ class kfold_classification_model(TransformerMixin):
             kscores.append(mod.score(X_test, y_test))
             models.append(mod)
         self.kscores = kscores
-        self.model.fit(X_1, y_1);
+        self.model.fit(X, y);
         return self
 
     def transform(self, X, *_) :
