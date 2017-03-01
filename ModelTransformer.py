@@ -85,7 +85,7 @@ class kfold_classification_model(TransformerMixin):
                 plt.plot(fpr, tpr)
                 plt.show()
 
-        return acc
+        return np.mean(self.kscores)
 
 class PredictTransformer(TransformerMixin):
     def __init__(self, model) :
