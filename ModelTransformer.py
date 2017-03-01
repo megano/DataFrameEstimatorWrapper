@@ -58,13 +58,15 @@ class kfold_classification_model(TransformerMixin):
 
     def score(self, X_test, y_test) :
         y_pred = self.model.predict(X_test)
+
+        isBinary = (set(np.unique(y_test)) == {0,1})
         cm = confusion_matrix(y_test, y_pred)
 
 
         #scoring parameters
         acc = self.model.score(X_test, y_test)
-        precision = precision_score(y_test, y_pred)
-        recall = recall_score(y_test, y_pred)
+        precision = precision_score(y_test, y_pred, average=None)
+        recall = recall_score(y_test, y_pred,average=None)
         #
 
         print "\nConfusion matrix "
@@ -73,10 +75,11 @@ class kfold_classification_model(TransformerMixin):
         print "precision ", precision
         print "recall ", recall
 
-        y_pred_proba = self.model.predict_proba(X_test)
-        fpr, tpr,thres = roc_curve(y_test, y_pred_proba[:,1])
-        plt.plot(fpr, tpr)
-        plt.show()
+        if(isBinary == True) :
+            y_pred_proba = self.model.predict_proba(X_test)
+            fpr, tpr,thres = roc_curve(y_test, y_pred_proba[:,1])
+            plt.plot(fpr, tpr)
+            plt.show()
 
         return acc
 
