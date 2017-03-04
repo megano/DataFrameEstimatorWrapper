@@ -98,3 +98,15 @@ class PredictTransformer(TransformerMixin):
 
     def fit(self, X, y =None):
         return self
+
+class DenseTransformer(BaseEstimator, TransformerMixin):
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        val = X.copy()
+        try :
+            val = val.todense()
+        except:
+            pass
+        return val
